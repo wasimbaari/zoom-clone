@@ -9,7 +9,6 @@ on:
 env:
   AWS_REGION: ap-south-2
   ECR_REPOSITORY: zoom-clone-app
-  # In a real environment, you'd use OIDC for AWS auth, but for simplicity here we use secrets
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
@@ -32,26 +31,26 @@ jobs:
       # ==========================================
       - name: Snyk Vulnerability Scan
         uses: snyk/actions/node@master
-        continue-on-error: true # Allow the pipeline to continue building even if vulnerabilities exist
+        continue-on-error: true 
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          args: --severity-threshold=critical # Only flag the absolute worst issues
+          args: --severity-threshold=critical
 
       # ==========================================
       # 2. SAST (Static Application Security Testing)
       # ==========================================
-      # Note: Requires setting up a SonarCloud project and tokens
-      # ==========================================
       - name: SonarCloud Scan
-        uses: sonarsource/sonarqube-scan-action@v5.0.0
+        uses: sonarsource/sonarqube-scan-action@v5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
+          projectBaseDir: .
           args: >
             -Dsonar.projectKey=wasimbaari_zoom-clone
-            -Dsonar.organization=mdwasimbaari
+            -Dsonar.organization=wasimbaari
+
       # ==========================================
       # 3. AWS Authentication & ECR Login
       # ==========================================
@@ -85,7 +84,7 @@ jobs:
         with:
           image-ref: '${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}'
           format: 'table'
-          exit-code: '1' # Fails the pipeline if CRITICAL vulnerabilities are found
+          exit-code: '1'
           ignore-unfixed: true
           vuln-type: 'os,library'
           severity: 'CRITICAL'
