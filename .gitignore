@@ -38,3 +38,15 @@ next-env.d.ts
 .vscode
 
 .env
+setup_project.py
+generate_infra.py
+
+# Ignore all terraform internal files everywhere
+**/.terraform/
+**/.terraform.lock.hcl
+**/terraform.tfstate
+**/terraform.tfstate.backup
+
+# Ignore the provider binaries
+**/*.exe
+**/*.dll

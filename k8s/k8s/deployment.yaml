@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zoom-clone-app
+  namespace: production
+  labels:
+    app: zoom-clone
+spec:
+  replicas: 2 # Start with High Availability (HA)
+  selector:
+    matchLabels:
+      app: zoom-clone
+  template:
+    metadata:
+      labels:
+        app: zoom-clone
+    spec:
+      # Industry Standard: Enforce non-root execution
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1001
+        fsGroup: 1001
+      containers:
+        - name: zoom-clone-app
+          # This image tag will be updated automatically by your CI pipeline or ArgoCD Image Updater
+          image: <YOUR_ACCOUNT_ID>.dkr.ecr.ap-south-2.amazonaws.com/zoom-clone-app:latest 
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+          # SRE Best Practice: Never deploy without resource requests and limits
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "512Mi"
+            limits:
+              cpu: "500m"
+              memory: "1Gi"
+          # SRE Best Practice: Liveness and Readiness probes
+          livenessProbe:
+            httpGet:
+              path: / # Or a dedicated /api/health endpoint if the SDE built one
+              port: 3000
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          envFrom:
+            - secretRef:
+                name: zoom-clone-secrets # We will map Clerk and Stream API keys here
