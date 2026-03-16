@@ -27,6 +27,7 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 3000
+          
           # SRE Best Practice: Never deploy without resource requests and limits
           resources:
             requests:
@@ -35,19 +36,27 @@ spec:
             limits:
               cpu: "500m"
               memory: "1Gi"
-          # SRE Best Practice: Liveness and Readiness probes
-          livenessProbe:
-            httpGet:
-              path: / # Or a dedicated /api/health endpoint if the SDE built one
-              port: 3000
-            initialDelaySeconds: 15
-            periodSeconds: 20
-          readinessProbe:
-            httpGet:
-              path: /
-              port: 3000
-            initialDelaySeconds: 10
-            periodSeconds: 10
+          
+          # ==========================================
+          # PROBES TEMPORARILY DISABLED
+          # ==========================================
+          # Disabled because Clerk auth intercepts the root path (/) and returns 
+          # redirects/404s, causing Kubernetes to endlessly kill the pod.
+          # 
+          # livenessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: 3000
+          #   initialDelaySeconds: 15
+          #   periodSeconds: 20
+          # readinessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: 3000
+          #   initialDelaySeconds: 10
+          #   periodSeconds: 10
+          # ==========================================
+
           envFrom:
             - secretRef:
-                name: zoom-clone-secrets # We will map Clerk and Stream API keys here
+                name: zoom-clone-secrets # Maps Clerk and Stream API keys
