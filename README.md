@@ -1,6 +1,6 @@
 🎥 Yoom (Zoom Clone) - Enterprise DevSecOps & Cloud Deployment
 
-https://github.com/wasimbaari/zoom-clone/blob/191085f83216093c10b09c5df2d7086b1caa57be/Screenshot%202026-03-17%20203058.png
+![image alt](https://github.com/wasimbaari/zoom-clone/blob/191085f83216093c10b09c5df2d7086b1caa57be/Screenshot%202026-03-17%20203058.png)
 
 📋 Project Overview & Attribution
 This project is a fully functional, real-time video conferencing application (Zoom Clone) deployed on a highly available, enterprise-grade cloud infrastructure with a heavy emphasis on security ("Shift-Left" methodology).
@@ -40,7 +40,7 @@ Video/Audio API: GetStream
 
 Styling: Tailwind CSS, shadcn/ui
 
-https://github.com/wasimbaari/zoom-clone/blob/191085f83216093c10b09c5df2d7086b1caa57be/Screenshot%202026-03-17%20133600.png
+![image alt](https://github.com/wasimbaari/zoom-clone/blob/191085f83216093c10b09c5df2d7086b1caa57be/Screenshot%202026-03-17%20133600.png)
 
 🛡️ DevSecOps Pipeline (CI/CD)
 The core of this deployment relies on a robust, automated GitHub Actions pipeline that enforces security checks before any code is allowed to reach the infrastructure.
@@ -78,7 +78,7 @@ The Pull Method: ArgoCD is deployed inside the EKS cluster. It continuously poll
 
 Automated Sync: When ArgoCD detects the new image tag committed by the GitHub Actions bot, it flags the cluster as "Out of Sync." It automatically applies the changes to the EKS cluster, pulling the new image from ECR and performing a rolling update with zero downtime.
 
-https://github.com/wasimbaari/zoom-clone/blob/191085f83216093c10b09c5df2d7086b1caa57be/Screenshot%202026-03-17%20151711.png
+![image alt](https://github.com/wasimbaari/zoom-clone/blob/191085f83216093c10b09c5df2d7086b1caa57be/Screenshot%202026-03-17%20151711.png)
 
 Networking
 Load Balancing: The Kubernetes Service is exposed to the internet via an AWS Application Load Balancer (ELB), securely routing traffic directly to the Next.js pods.
@@ -92,7 +92,7 @@ Meeting Management: Schedule future meetings, view past meeting logs, and manage
 
 Personal Rooms: Unique meeting links for instant, ad-hoc conferencing.
 
-https://github.com/wasimbaari/zoom-clone/blob/191085f83216093c10b09c5df2d7086b1caa57be/Screenshot%202026-03-17%20155529.png
+![image alt](https://github.com/wasimbaari/zoom-clone/blob/191085f83216093c10b09c5df2d7086b1caa57be/Screenshot%202026-03-17%20155529.png)
 
 🤸 Local Development Setup
 If you wish to run the application locally for development purposes:
@@ -123,4 +123,4 @@ Bash
 npm run dev
 Open http://localhost:3000 in your browser.
 
-https://github.com/wasimbaari/zoom-clone/blob/191085f83216093c10b09c5df2d7086b1caa57be/Screenshot%202026-03-17%20203058.png
+![image alt](https://github.com/wasimbaari/zoom-clone/blob/191085f83216093c10b09c5df2d7086b1caa57be/Screenshot%202026-03-17%20203058.png)
