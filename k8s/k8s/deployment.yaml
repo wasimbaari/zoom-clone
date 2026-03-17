@@ -37,26 +37,23 @@ spec:
               cpu: "500m"
               memory: "1Gi"
           
+         # ==========================================
+          # SRE Best Practice: Health Probes
           # ==========================================
-          # PROBES TEMPORARILY DISABLED
+          livenessProbe:
+            httpGet:
+              path: /api/health # Dedicated unauthenticated endpoint
+              port: 3000
+            initialDelaySeconds: 20 # Give Next.js time to boot
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: 3000
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
           # ==========================================
-          # Disabled because Clerk auth intercepts the root path (/) and returns 
-          # redirects/404s, causing Kubernetes to endlessly kill the pod.
-          # 
-          # livenessProbe:
-          #   httpGet:
-          #     path: /
-          #     port: 3000
-          #   initialDelaySeconds: 15
-          #   periodSeconds: 20
-          # readinessProbe:
-          #   httpGet:
-          #     path: /
-          #     port: 3000
-          #   initialDelaySeconds: 10
-          #   periodSeconds: 10
-          # ==========================================
-
-          envFrom:
-            - secretRef:
-                name: zoom-clone-secrets # Maps Clerk and Stream API keys

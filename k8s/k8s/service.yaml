@@ -3,16 +3,11 @@ kind: Service
 metadata:
   name: zoom-clone-service
   namespace: production
-  annotations:
-    # Industry Standard: Provision an AWS Network Load Balancer (NLB) instead of a Classic LB
-    service.beta.kubernetes.io/aws-load-balancer-type: "external"
-    service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: "ip"
-    service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
 spec:
   selector:
     app: zoom-clone
   ports:
     - protocol: TCP
-      port: 80 # The port the internet hits
-      targetPort: 3000 # The port your Next.js app listens on
+      port: 80 
+      targetPort: 3000 
   type: LoadBalancer
