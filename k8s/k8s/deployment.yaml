@@ -28,7 +28,7 @@ spec:
       containers:
         - name: zoom-clone-app
           # This image tag will be updated automatically by your CI pipeline or ArgoCD Image Updater
-          image: 734367008253.dkr.ecr.ap-south-2.amazonaws.com/zoom-clone-app:77d93aca2e8c12fcfa92cbed728ece7d7b393c51
+          image: 734367008253.dkr.ecr.ap-south-2.amazonaws.com/zoom-clone-app:191085f83216093c10b09c5df2d7086b1caa57be
           imagePullPolicy: Always
           ports:
             - containerPort: 3000
