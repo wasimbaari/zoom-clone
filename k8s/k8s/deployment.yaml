@@ -37,23 +37,29 @@ spec:
               cpu: "500m"
               memory: "1Gi"
           
-         # ==========================================
-          # SRE Best Practice: Health Probes
           # ==========================================
-          livenessProbe:
-            httpGet:
-              path: /api/health # Dedicated unauthenticated endpoint
-              port: 3000
-            initialDelaySeconds: 20 # Give Next.js time to boot
-            periodSeconds: 10
-            timeoutSeconds: 5
-            failureThreshold: 3
-          readinessProbe:
-            httpGet:
-              path: /api/health
-              port: 3000
-            initialDelaySeconds: 15
-            periodSeconds: 10
-            timeoutSeconds: 5
-            failureThreshold: 3
+          # PROBES TEMPORARILY DISABLED
           # ==========================================
+          # Disabled to investigate Next.js HTTP 500 error on /api/health
+          # 
+          # livenessProbe:
+          #   httpGet:
+          #     path: /api/health 
+          #     port: 3000
+          #   initialDelaySeconds: 20 
+          #   periodSeconds: 10
+          #   timeoutSeconds: 5
+          #   failureThreshold: 3
+          # readinessProbe:
+          #   httpGet:
+          #     path: /api/health
+          #     port: 3000
+          #   initialDelaySeconds: 15
+          #   periodSeconds: 10
+          #   timeoutSeconds: 5
+          #   failureThreshold: 3
+          # ==========================================
+
+          envFrom:
+            - secretRef:
+                name: zoom-clone-secrets # Maps Clerk and Stream API keys
